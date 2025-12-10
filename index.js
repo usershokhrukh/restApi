@@ -1,8 +1,12 @@
 const request = new XMLHttpRequest();
+let reporter = 0;
 
 function getData(data) {
   data.map((item, index) => {
     let {body, likes, user} = item;
+    if(reporter == index) {
+      reporter = 0;
+    }
     add(body, likes, user.fullName);
   });
 }
@@ -17,18 +21,28 @@ const elSend = document.querySelector(".send");
 
 let likes = 0;
 let views = 1;
-
 elSend.addEventListener("click", (e) => {
-  console.log(elInput);
   if (!elInput.value.trim()) {
     elInput.classList.add("warning");
   } else {
     elInput.classList.remove("warning");
-    elMainText.textContent = elInput.value.trim();
+    let responseText = JSON.parse(request.responseText);
+    if(reporter != 0) {
+      if(reporter == responseText.comments.length) {
+        elInput.value = "";
+        setTimeout(() => {
+          startData();
+        }, 2000);
+      }else {
+        alert(`Wait for end of comments ${responseText.comments.length - reporter} left`)
+      }
+    }else {
+      elMainText.textContent = elInput.value.trim();
+      setTimeout(() => {
+          startData();
+        }, 2000);
+    }
     elInput.value = "";
-    setTimeout(() => {
-      startData();
-    }, 2000);
   }
 });
 
@@ -54,8 +68,6 @@ function dislikes(index) {
 }
 
 function startData() {
-  console.log(request);
-  console.log(request);
   if (request.readyState === 4) {
     let responseText = JSON.parse(request.responseText);
     getData(responseText.comments);
@@ -71,6 +83,7 @@ elInput.addEventListener("input", (e) => {
 
 function add(body, likesU, fullName) {
   setTimeout(() => {
+    reporter++;
     elCards.innerHTML += `
       <div class="section__items">
           <div class="section__items-top">
