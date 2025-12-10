@@ -106,7 +106,7 @@
 }
 .section__top-box-view {
   position: absolute;
-  bottom: 8px;
+  bottom: 18px;
   right: 10px;
   display: flex;
   align-items: center;
@@ -164,11 +164,12 @@
 .section__main-text {
   font-family: sans-serif;
   background-color: white;
-  padding: 5px 5px 30px 5px;
+  padding: 5px 5px 40px 5px;
   min-width: 200px;
   font-size: 12px;
   border: 1px solid rgb(82, 159, 218);
   margin-bottom: 3px;
+  overflow-x: auto;
 }
 .section .send {
   position: absolute;
