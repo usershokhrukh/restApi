@@ -27,6 +27,9 @@ elSend.addEventListener("click", (e) => {
   } else {
     elInput.classList.remove("warning");
     let responseText = JSON.parse(request.responseText);
+    if(reporter == responseText.comments.length) {
+      reporter = 0;
+    }
     if(reporter != 0) {
       if(reporter == responseText.comments.length) {
         elInput.value = "";
